@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Whitelist - AudioText</title>
+  <meta name="description" content="Join the whitelist for early access to the most affordable audio transcription service.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎙️</text></svg>">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">AudioText</a>
+    </div>
+  </header>
+
+  <!-- Whitelist Section -->
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">Join Our Whitelist</h1>
+      <p style="text-align: center; margin-bottom: 2rem;">Be among the first to access our affordable audio transcription service.</p>
+      
+      <!-- Form Container -->
+      <div id="form-container">
+        <div class="whitelist-form">
+          <!-- Error Message -->
+          <div id="error-message" class="form-message error-message" style="display: none;">
+            Please enter a valid email address.
+          </div>
+          
+          <form id="whitelist-form">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" id="email" class="form-control" placeholder="Your email" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Submit</button>
+            
+            <div class="counter">
+              <p>Limited spots available: <span id="spots-counter">15</span> remaining</p>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Success Message (initially hidden) -->
+      <div id="success-message" class="whitelist-form success-message" style="display: none;">
+        <h3>Thank you!</h3>
+        <p>Your registration has been successful. Please check your email for confirmation.</p>
+        <p style="margin-top: 1rem;"><a href="index.html">Back to home</a></p>
+      </div>
+      
+      <!-- Full Message (initially hidden) -->
+      <div id="full-message" class="whitelist-form" style="display: none;">
+        <h3>Whitelist is Full</h3>
+        <p>We've reached our limit of early access users. Please check back later for our public launch.</p>
+        <p style="margin-top: 1rem;"><a href="index.html">Back to home</a></p>
+      </div>
+      
+      <!-- Closed Message (initially hidden) -->
+      <div id="closed-message" class="whitelist-form" style="display: none;">
+        <h3>Registration Closed</h3>
+        <p>Our early access registration period has ended. Please check back soon for our public launch.</p>
+        <p style="margin-top: 1rem;"><a href="index.html">Back to home</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 AudioText. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="assets/js/whitelist.js"></script>
+</body>
+</html>
