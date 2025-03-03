@@ -57,23 +57,41 @@ document.addEventListener('DOMContentLoaded', function() {
     return emailRegex.test(email);
   }
   
-  // Send email using Fetch API
+  // Send email using EmailJS
   async function sendEmail(email) {
     try {
-      // Create FormData object
-      const formData = new FormData();
-      formData.append('email', email);
+      // Current date and time for the templates
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleDateString();
+      const formattedTime = currentDate.toLocaleTimeString();
       
-      // Send data to PHP script
-      const response = await fetch('/process-email.php', {
-        method: 'POST',
-        body: formData
-      });
+      // Get the registration count (15 - available spots)
+      const registrationCount = 15 - spotsAvailable;
       
-      // Parse JSON response
-      const data = await response.json();
+      // Send notification to admin
+      const adminResponse = await emailjs.send(
+        "service_id", // Replace with your EmailJS service ID
+        "template_admin", // Replace with your admin template ID
+        {
+          email: email,
+          system_date: formattedDate,
+          system_time: formattedTime,
+          registration_count: registrationCount + 1 // Adding this registration
+        }
+      );
       
-      return data.success;
+      // Send confirmation to user
+      const userResponse = await emailjs.send(
+        "service_id", // Replace with your EmailJS service ID
+        "template_user", // Replace with your user template ID
+        {
+          to_email: email,
+          system_date: formattedDate
+        }
+      );
+      
+      // Check if both emails were sent successfully
+      return adminResponse.status === 200 && userResponse.status === 200;
     } catch (error) {
       console.error('Error sending email:', error);
       return false;
