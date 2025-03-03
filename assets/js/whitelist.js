@@ -53,13 +53,36 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Email validation function
   function isValidEmail(email) {
-    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  }
+  
+  // Send email using Fetch API
+  async function sendEmail(email) {
+    try {
+      // Create FormData object
+      const formData = new FormData();
+      formData.append('email', email);
+      
+      // Send data to PHP script
+      const response = await fetch('/process-email.php', {
+        method: 'POST',
+        body: formData
+      });
+      
+      // Parse JSON response
+      const data = await response.json();
+      
+      return data.success;
+    } catch (error) {
+      console.error('Error sending email:', error);
+      return false;
+    }
   }
   
   // Handle form submission
   if(whitelistForm) {
-    whitelistForm.addEventListener('submit', function(e) {
+    whitelistForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       
       // Hide any previous messages
@@ -84,11 +107,16 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
       
-      // Here you would typically send the data to your backend
-      // For demo purposes, we'll just simulate a successful submission
+      // Disable submit button and show loading state
+      const submitButton = whitelistForm.querySelector('button[type="submit"]');
+      const originalButtonText = submitButton.textContent;
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting...';
       
-      // Simulate API call with timeout
-      setTimeout(() => {
+      // Send email
+      const emailSent = await sendEmail(email);
+      
+      if (emailSent) {
         // Decrease available spots
         spotsAvailable--;
         updateCounter();
@@ -99,11 +127,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Clear form
         whitelistForm.reset();
+      } else {
+        // Show error message
+        errorMessage.textContent = 'Failed to send email. Please try again later.';
+        errorMessage.style.display = 'block';
         
-        // In a real implementation, you would send an email notification here
-        console.log('Simulated email sent to user:', email);
-        console.log('Simulated email sent to owner: New whitelist registration:', email);
-      }, 1000);
+        // Reset button
+        submitButton.disabled = false;
+        submitButton.textContent = originalButtonText;
+      }
     });
   }
   
