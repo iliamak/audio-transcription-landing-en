@@ -70,23 +70,25 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Send notification to admin
       const adminResponse = await emailjs.send(
-        "service_id", // Replace with your EmailJS service ID
-        "template_admin", // Replace with your admin template ID
+        "service_btmfez1", // Service ID
+        "template_63fn6z6", // Template ID
         {
           email: email,
           system_date: formattedDate,
           system_time: formattedTime,
-          registration_count: registrationCount + 1 // Adding this registration
+          registration_count: registrationCount + 1, // Adding this registration
+          message_type: "admin_notification" // Flag to differentiate message types in the template
         }
       );
       
       // Send confirmation to user
       const userResponse = await emailjs.send(
-        "service_id", // Replace with your EmailJS service ID
-        "template_user", // Replace with your user template ID
+        "service_btmfez1", // Service ID
+        "template_63fn6z6", // Template ID
         {
           to_email: email,
-          system_date: formattedDate
+          system_date: formattedDate,
+          message_type: "user_confirmation" // Flag to differentiate message types in the template
         }
       );
       
